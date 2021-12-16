@@ -16,6 +16,7 @@ params.makeGene="$projectDir/scripts/makeGene.sh" //bash script to make gtf into
 process MapReads
 {
 publishDir "${params.outdir}/Bam"
+
 input:
 env read1 from params.fq1
 env read2 from params.fq2
@@ -27,7 +28,7 @@ path "mapped.bam.bai" into mapped_bam_bai
 
 
 '''
-STAR --genomeDir star_ref --readFilesIn $read1 $read2 --outSAMattributes NH HI AS nM  --outSAMtype BAM SortedByCoordinate --outFileNamePrefix results --readFilesCommand zcat --outStd BAM_SortedByCoordinate > mapped.bam
+STAR --genomeDir ref --readFilesIn $read1 $read2 --outSAMattributes NH HI AS nM  --outSAMtype BAM SortedByCoordinate --outFileNamePrefix results --readFilesCommand zcat --outStd BAM_SortedByCoordinate > mapped.bam
 
 samtools index mapped.bam
 '''
@@ -110,8 +111,8 @@ output:
 path "juncfile.genes.bed" into ann_juncs
 
 '''
-makeGene.sh genes.gtf genes.bed
-bedtools intersect -S -a regtools.junc -b gene.bed -wa -wb > juncfile.genes.bed
+source makeGene.sh genes.gtf genes.bed
+bedtools intersect -S -a regtools.junc -b genes.bed -wa -wb > juncfile.genes.bed
 '''
 }
 
