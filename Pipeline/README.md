@@ -52,4 +52,6 @@ The name of the out directory to publish results to
 A ref flat file to use with PICARD. Should correspond to the GTF. Needed for QC step.
 
 
+##To Be Added
 
+This is an initial version of the pipeline. There are many things to be added, in particular RSEM/Kallisto for quantification and an updated pipeline to run multiple samples at once using a sample sheet.
