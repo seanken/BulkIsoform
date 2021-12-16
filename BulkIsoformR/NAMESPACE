@@ -3,6 +3,7 @@
 export(BasicQC)
 export(RunDiffUTR)
 export(TestIntrons)
+export(TestPeakOutput)
 export(cleanUp)
 export(combinedJunctions)
 export(getAll)

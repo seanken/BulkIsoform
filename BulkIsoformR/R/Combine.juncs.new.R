@@ -92,7 +92,10 @@ return(dat_orig)
 loadData_Junc=function(lst)
 {
 print("Load data!")
-out=lapply(lst,function(x){
+if(is.null(names(lst))){names(lst)=lst}
+
+out=lapply(names(lst),function(nam){
+x=lst[[nam]]
 dat=read.table(x,sep="\t",stringsAsFactors=F)
 print(x)
 print("Reformat and filter")
@@ -100,7 +103,7 @@ dat=dat[,c(1,2,3,4,5,6,16)]
 colnames(dat)=c("Chr","Start","End","Name","Count","Sign","Gene")
 tab=table(dat[,"Name"])
 dat=dat[tab[dat[,"Name"]]==1,]
-dat["Sample"]=x
+dat["Sample"]=nam
 return(dat)
 })
 dat=do.call(rbind,out)
