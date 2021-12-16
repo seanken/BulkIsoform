@@ -3,7 +3,9 @@ params.fq1 //The first fastq, can be a list, should all be gzipped
 params.fq2 //The second fastq, can be a list, should all be gzipped
 params.star_ref //STAR reference
 params.gtf //GTF reference corresponding to STAR reference
+params.outdir //the out directory to publish to
 params.refflat //ref flat file, later extend pipeline to make on its own
+
 
 params.picard="$projectDir/jars/picard.jar" //PICARD jar file
 params.makeGene="$projectDir/scripts/makeGene.sh" //bash script to make gtf into genes bed file
@@ -13,6 +15,7 @@ params.makeGene="$projectDir/scripts/makeGene.sh" //bash script to make gtf into
 //Maps reads to a reference with STAR
 process MapReads
 {
+publishDir "${params.outdir}/Bam"
 input:
 env read1 from params.fq1
 env read2 from params.fq2
@@ -35,6 +38,7 @@ samtools index mapped.bam
 //Count reads, both with and without introns counted, assumes antisense reads
 process CountReads
 {
+publishDir "${params.outdir}/Counts"
 input:
 path gtf, stageAs:"genes.gtf" from params.gtf
 path mapped_bam, stageAs:"mapped.bam" from mapped_bam
@@ -54,6 +58,8 @@ featureCounts -p -s 2 -t gene -g gene_name -a genes.gtf -o counts.introns.txt ma
 //Runs Picard too collect RNASeq Metrics
 process PicardQC
 {
+
+publishDir "${params.outdir}/QC"
 input:
 path pic_jar, stageAs:"picard.jar" from params.picard
 path mapped_bam, stageAs:"mapped.bam" from mapped_bam
@@ -75,6 +81,7 @@ java -jar picard.jar CollectRnaSeqMetrics I=mapped.bam O=output.QC.txt STRAND=FI
 process ExtractJunctions
 {
 
+publishDir "${params.outdir}/Junctions"
 input:
 path mapped_bam, stageAs:"mapped.bam" from mapped_bam
 path mapped_bam, stageAs:"mapped.bam.bai" from mapped_bam_bai
@@ -91,6 +98,9 @@ regtools junctions extract -a 8 -m 50 -M 500000 -s 2 -o regtools.junc mapped.bam
 //annotates the junc files with gene of origin information
 process AnnotateJunctions
 {
+
+publishDir "${params.outdir}/AnnJunctions"
+
 input:
 path reg_jun, stageAs:"regtools.junc" from regtools_junc
 path gtf, stageAs:"genes.gtf" from params.gtf
