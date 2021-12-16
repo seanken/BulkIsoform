@@ -9,7 +9,7 @@ You need to have Java installed (v8 or later) and some version of Conda, as well
 git clone https://github.com/seanken/BulkIsoform.git
 ```
 
-You are then ready to run!
+You also need to install the requirements, see below--the easiest way is to start a conda environment and run 'source scripts/makeConda.sh'. Once you do that, however, you are then ready to run!
 
 
 ## Requirements
@@ -19,7 +19,7 @@ The pipeline is set up so that all you need to run it is Conda, nextflow, and ja
 2) samtools
 3) bedtools
 4) STAR
-5) featureCounts
+5) subread (for featureCounts)
 
 If you have conda installed you simply need to create a new environment and use the script scripts/makeConda.sh to install everything. We plan on adding alternative methods to get the proper environment later.
 
