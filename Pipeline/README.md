@@ -36,4 +36,20 @@ pipeline=/path/to/BulkPipeline.nf
 $nextflow $pipeline [options]
 ```
 
-The pipeline has a mix of optional and required options.
+The pipeline has a mix of optional and required options. The options:
+
+#### --fq1 
+The fastq for read 1. Can be a comma seperated list. Must all by gzipped.
+#### --fq2 
+The fastq for read 2. Can be a comma seperated list. Must all by gzipped.
+#### star_ref 
+The STAR reference to be used
+####gtf 
+The GTF to use, corresponding to the STAR reference
+####outdir 
+The name of the out directory to publish results to
+####refflat 
+A ref flat file to use with PICARD. Should correspond to the GTF. Needed for QC step.
+
+
+
