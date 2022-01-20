@@ -30,7 +30,7 @@ If you have conda installed you simply need to create a new environment and use 
 
 In order to run the pipeline, one needs a gtf, a STAR reference, a salmon reference, a refflat file, and a RSEM reference. It is possible to generate each of them seperately, but we also offer an option to generate a joint reference. To do this, one needs a gtf file and a fasta file from the genome/transcriptome of the species of interest. 
 
-'''
+```
 nextflow=/path/to/nextflow
 pipeline=/path/to/
 gtf=/path/to/gtf
@@ -38,7 +38,7 @@ fa=/path/to/fasta
 output=/path/to/output/directory
 
 $nextflow $pipeline --gtf $gtf --fa $fa --outdir $output
-'''
+```
 
 This will create a reference in the output directory that we can use for the pipeline.
 
