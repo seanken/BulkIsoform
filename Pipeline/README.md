@@ -32,7 +32,7 @@ In order to run the pipeline, one needs a gtf, a STAR reference, a salmon refere
 
 ```
 nextflow=/path/to/nextflow
-pipeline=/path/to/
+pipeline=/path/to/MakeRef.nf
 gtf=/path/to/gtf
 fa=/path/to/fasta
 output=/path/to/output/directory
