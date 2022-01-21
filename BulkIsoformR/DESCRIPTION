@@ -20,4 +20,6 @@ Depends:
 	diffUTR,
 	SummarizedExperiment,
 	Matrix,
-	glmGamPoi
+	glmGamPoi,
+	DRIMSeq,
+	tximport
