@@ -15,7 +15,7 @@ path "STAR_ref" into STAR
 path "genes" into GTF
 
 '''
-STAR --runMode genomeGenerate --genomeDir STAR_ref --genomeFastaFiles genome.fa --sjdbGTFfile genes_new.gtf
+STAR --runMode genomeGenerate --genomeDir STAR_ref --genomeFastaFiles genome.fa --sjdbGTFfile genes.gtf
 mkdir genes
 cp genes.gtf genes/genes_new.gtf
 '''
@@ -68,7 +68,7 @@ process BuildRefFlat //Creates RefFlat file for use with PICARD Tools
 {
 publishDir "${params.outdir}/RefFlat", mode: 'move'
 input:
-path GTF, stageAs:"genes.gtf" from GTF
+path params.gtf, stageAs:"genes.gtf" from params.gtf
 path refflat, stageAs:"MakeRefFlat.sh" from params.refflat
 
 output:

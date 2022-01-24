@@ -22,4 +22,5 @@ Depends:
 	Matrix,
 	glmGamPoi,
 	DRIMSeq,
-	tximport
+	tximport,
+	DEXSeq

@@ -8,6 +8,7 @@ params.refflat="${params.ref_comb}/RefFlat/refflat.txt" //ref flat file, later e
 params.salmon_ref="${params.ref_comb}/Salmon" //Salmon reference
 params.rsem_ref="${params.ref_comb}/RSEM/ref" //RSEM reference
 params.star_ref="${params.ref_comb}/STAR_ref" //STAR reference
+params.isoMethod="Salmon" //Either RSEM or Salmon or Both
 
 params.picard="$projectDir/jars/picard.jar" //PICARD jar file
 params.makeGene="$projectDir/scripts/makeGene.sh" //bash script to make gtf into genes bed file
@@ -132,6 +133,9 @@ env read2 from params.fq2
 output:
 path "RSEM_out" into RSEM_count
 
+when:
+params.isoMethod!="Salmon"
+
 '''
 mkdir RSEM_out
 rsem-calculate-expression --star --star-gzipped-read-file --no-bam-output --strandedness reverse --paired-end --estimate-rspd $read1 $read2 $RSEM RSEM_out/Samp
@@ -152,6 +156,9 @@ path geneToTrans, stageAs:"makeGeneToTrans.sh" from params.geneToTrans
 
 output:
 path "Salmon_out" into Salmon_count
+
+when:
+params.isoMethod!="RSEM"
 
 '''
 mkdir Salmon_out

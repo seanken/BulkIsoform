@@ -27,6 +27,8 @@ dxr <- DEXSeqResults(dxd, independentFiltering=FALSE)
 print("get gene level and return")
 qval <- perGeneQValue(dxr)
 lst=list()
+dxr=data.frame(dxr)
+dxr=dxr[order(dxr$pvalue),1:7]
 lst[["Results"]]=dxr
 lst[["PerGene"]]=qval
 return(lst)
