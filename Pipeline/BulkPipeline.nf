@@ -75,7 +75,7 @@ path "output.QC.txt" into Picard_QC
 
 
 '''
-java -jar picard.jar CollectRnaSeqMetrics I=mapped.bam O=output.QC.txt STRAND=FIRST_READ_TRANSCRIPTION_STRAND REF_FLAT=refFlat.txt
+java -jar picard.jar CollectRnaSeqMetrics I=mapped.bam O=output.QC.txt STRAND=SECOND_READ_TRANSCRIPTION_STRAND REF_FLAT=refFlat.txt
 '''
 
 }

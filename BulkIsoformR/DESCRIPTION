@@ -23,4 +23,4 @@ Depends:
 	glmGamPoi,
 	DRIMSeq,
 	tximport,
-	DEXSeq
+	DEXSeq,
