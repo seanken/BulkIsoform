@@ -162,7 +162,9 @@ params.isoMethod!="RSEM"
 
 '''
 mkdir Salmon_out
-salmon quant -i ref -l A --posBias --seqBias --gcBias --validateMapping -1 $read1 -2 $read2 -o Salmon_out
+read1_new=$(echo $read1 | sed 's/,/ /g')
+read2_new=$(echo $read2 | sed 's/,/ /g')
+salmon quant -i ref -l A --posBias --seqBias --gcBias --validateMapping -1 $read1_new -2 $read2_new -o Salmon_out
 echo Make tx to gene file
 source makeGeneToTrans.sh genes.gtf Salmon_out/trans2gene.txt
 '''
