@@ -5,7 +5,7 @@ params.outdir //the out directory to publish to
 params.ref_comb //Combined referencei
 params.gtf="${params.ref_comb}/genes/genes_new.gtf" //GTF reference corresponding to STAR reference
 params.refflat="${params.ref_comb}/RefFlat/refflat.txt" //ref flat file, later extend pipeline to make on its own
-params.salmon_ref="${params.ref_comb}/Salmon" //Salmon reference
+params.salmon_ref="${params.ref_comb}/Salmon/ref.idx" //Salmon reference
 params.rsem_ref="${params.ref_comb}/RSEM/ref" //RSEM reference
 params.star_ref="${params.ref_comb}/STAR_ref" //STAR reference
 params.isoMethod="Salmon" //Either RSEM or Salmon or Both
