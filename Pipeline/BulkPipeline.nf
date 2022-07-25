@@ -28,10 +28,10 @@ path star_ref, stageAs:"ref" from params.star_ref
 output:
 path "mapped.bam" into mapped_bam
 path "mapped.bam.bai" into mapped_bam_bai
-
+path "resultsLog.final.out" into mapper_qc
 
 '''
-STAR --genomeDir ref --readFilesIn $read1 $read2 --outSAMattributes NH HI AS nM  --outSAMtype BAM SortedByCoordinate --outFileNamePrefix results --readFilesCommand zcat --outStd BAM_SortedByCoordinate > mapped.bam
+STAR --genomeDir ref --readFilesIn $read1 $read2 --outSAMattributes NH HI AS nM  --outSAMtype BAM SortedByCoordinate --outFileNamePrefix results --readFilesCommand zcat --outStd BAM_SortedByCoordinate -outSAMunmapped Within > mapped.bam
 
 samtools index mapped.bam
 '''
@@ -49,7 +49,9 @@ path mapped_bam, stageAs:"mapped.bam" from mapped_bam
 
 output:
 path "counts.exons.txt" into exon_counts
+path "counts.exons.txt.summary" into exon_counts_sum
 path "counts.introns.txt" into with_intron_counts
+path "counts.introns.txt.summary" into with_intron_counts_sum
 
 
 '''
@@ -72,10 +74,12 @@ path refflat, stageAs:"refFlat.txt" from params.refflat
 
 output:
 path "output.QC.txt" into Picard_QC
-
+path "metrics.dup.txt" into Picard_dup
 
 '''
 java -jar picard.jar CollectRnaSeqMetrics I=mapped.bam O=output.QC.txt STRAND=SECOND_READ_TRANSCRIPTION_STRAND REF_FLAT=refFlat.txt
+java -jar picard.jar MarkDuplicates I=mapped.bam O=dup.bam M=metrics.dup.txt
+rm dup.bam
 '''
 
 }
@@ -94,7 +98,7 @@ output:
 path "regtools.junc" into regtools_junc
 
 '''
-regtools junctions extract -a 8 -m 50 -M 500000 -s 2 -o regtools.junc mapped.bam
+regtools junctions extract -a 8 -m 50 -M 500000 -s 1 -o regtools.junc mapped.bam
 '''
 
 }
@@ -115,7 +119,7 @@ path "juncfile.genes.bed" into ann_juncs
 
 '''
 source makeGene.sh genes.gtf genes.bed
-bedtools intersect -S -a regtools.junc -b genes.bed -wa -wb > juncfile.genes.bed
+bedtools intersect -s -a regtools.junc -b genes.bed -wa -wb > juncfile.genes.bed
 '''
 }
 
@@ -137,6 +141,7 @@ when:
 params.isoMethod!="Salmon"
 
 '''
+echo Hi
 mkdir RSEM_out
 rsem-calculate-expression --star --star-gzipped-read-file --no-bam-output --strandedness reverse --paired-end --estimate-rspd $read1 $read2 $RSEM RSEM_out/Samp
 '''
@@ -166,7 +171,8 @@ read1_new=$(echo $read1 | sed 's/,/ /g')
 read2_new=$(echo $read2 | sed 's/,/ /g')
 salmon quant -i ref -l A --posBias --seqBias --gcBias --validateMapping -1 $read1_new -2 $read2_new -o Salmon_out
 echo Make tx to gene file
-source makeGeneToTrans.sh genes.gtf Salmon_out/trans2gene.txt
+source makeGeneToTrans.sh genes.gtf gene_name Salmon_out/trans2gene.txt
+source makeGeneToTrans.sh genes.gtf gene_id Salmon_out/trans2gene.ens.txt
 '''
 }
 
