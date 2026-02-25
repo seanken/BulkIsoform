@@ -36,7 +36,7 @@ workflow Pipeline {
     }
     
     # Determine ref_comb: use MakeRef output if both workflows run, otherwise use provided ref_comb
-    String final_ref_comb = if both_workflows then select_first([MakeRef.MakeRef.output_directory]) else select_first([ref_comb, ""])
+    String final_ref_comb = if both_workflows then select_first([MakeRef.output_directory]) else select_first([ref_comb, ""])
     
     if (run_bulkpipe) {
         call BulkPipe.BulkPipeline {
