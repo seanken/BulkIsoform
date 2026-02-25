@@ -1,7 +1,7 @@
 version 1.0
 
-import "Pipeline/BulkPipe.wdl" as BulkPipe
-import "Pipeline/MakeRef.wdl" as MakeRef
+import "BulkPipe.wdl" as BulkPipe
+import "MakeRef.wdl" as MakeRef
 
 workflow Pipeline {
     input {
