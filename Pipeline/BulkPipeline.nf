@@ -77,8 +77,9 @@ path "output.QC.txt" into Picard_QC
 path "metrics.dup.txt" into Picard_dup
 
 '''
-java -jar picard.jar CollectRnaSeqMetrics I=mapped.bam O=output.QC.txt STRAND=SECOND_READ_TRANSCRIPTION_STRAND REF_FLAT=refFlat.txt
-java -jar picard.jar MarkDuplicates I=mapped.bam O=dup.bam M=metrics.dup.txt
+mkdir tmp
+java -jar picard.jar CollectRnaSeqMetrics I=mapped.bam O=output.QC.txt STRAND=SECOND_READ_TRANSCRIPTION_STRAND REF_FLAT=refFlat.txt TMP_DIR=tmp
+java -jar picard.jar MarkDuplicates I=mapped.bam O=dup.bam M=metrics.dup.txt TMP_DIR=tmp
 rm dup.bam
 '''
 

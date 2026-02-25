@@ -1,0 +1,5 @@
+version: 1.2 # The .dockstore.yml schema version
+workflows:
+- name: BulkPipeline
+  subclass: wdl
+  primaryDescriptorPath: /Pipeline/Pipeline.wdl
