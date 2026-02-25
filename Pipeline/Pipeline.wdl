@@ -54,18 +54,18 @@ workflow Pipeline {
     
     output {
         # MakeRef outputs
-        File? ref_directory = MakeRef.MakeRef.output_directory
+        File? ref_directory = MakeRef.output_directory
         
         # BulkPipe outputs
-        File? mapped_bam_out = BulkPipeline.BulkPipeline.mapped_bam_out
-        File? mapper_qc = BulkPipeline.BulkPipeline.mapper_qc
-        File? exon_counts = BulkPipeline.BulkPipeline.exon_counts
-        File? exon_counts_sum = BulkPipeline.BulkPipeline.exon_counts_sum
-        File? with_intron_counts = BulkPipeline.BulkPipeline.with_intron_counts
-        File? with_intron_counts_sum = BulkPipeline.BulkPipeline.with_intron_counts_sum
-        File? picard_qc = BulkPipeline.BulkPipeline.picard_qc
-        File? picard_dup = BulkPipeline.BulkPipeline.picard_dup
-        File? rsem_out = BulkPipeline.BulkPipeline.rsem_out
-        File? salmon_out = BulkPipeline.BulkPipeline.salmon_out
+        File? mapped_bam_out = BulkPipeline.mapped_bam_out
+        File? mapper_qc = BulkPipeline.mapper_qc
+        File? exon_counts = BulkPipeline.exon_counts
+        File? exon_counts_sum = BulkPipeline.exon_counts_sum
+        File? with_intron_counts = BulkPipeline.with_intron_counts
+        File? with_intron_counts_sum = BulkPipeline.with_intron_counts_sum
+        File? picard_qc = BulkPipeline.picard_qc
+        File? picard_dup = BulkPipeline.picard_dup
+        File? rsem_out = BulkPipeline.rsem_out
+        File? salmon_out = BulkPipeline.salmon_out
     }
 }
