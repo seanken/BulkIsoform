@@ -105,7 +105,7 @@ task CopyToOutdir {
     >>>
     
     output {
-        Directory final_outdir = outdir
+        File final_outdir = outdir
     }
 }
 
@@ -150,6 +150,6 @@ workflow MakeRef {
     }
     
     output {
-        Directory output_directory = CopyToOutdir.final_outdir
+        File output_directory = CopyToOutdir.final_outdir
     }
 }

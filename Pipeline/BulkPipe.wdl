@@ -8,9 +8,9 @@ workflow BulkPipeline {
         String ref_comb
         File gtf = ref_comb + "/genes/genes_new.gtf"
         File refflat = ref_comb + "/RefFlat/refflat.txt"
-        Directory salmon_ref = ref_comb + "/Salmon/ref.idx"
-        Directory rsem_ref = ref_comb + "/RSEM/ref"
-        Directory star_ref = ref_comb + "/STAR_ref"
+        File salmon_ref = ref_comb + "/Salmon/ref.idx"
+        File rsem_ref = ref_comb + "/RSEM/ref"
+        File star_ref = ref_comb + "/STAR_ref"
         String isoMethod = "Salmon"
         Int s = 2
         String gene_name = "gene_name"
@@ -73,8 +73,8 @@ workflow BulkPipeline {
         
         File picard_qc = PicardQC.picard_qc
         File picard_dup = PicardQC.picard_dup
-        Directory? rsem_out = RunRSEM.rsem_out
-        Directory? salmon_out = RunSalmon.salmon_out
+        File? rsem_out = RunRSEM.rsem_out
+        File? salmon_out = RunSalmon.salmon_out
     }
 }
 
@@ -82,7 +82,7 @@ task MapReads {
     input {
         Array[File] fq1
         Array[File] fq2
-        Directory star_ref
+        File star_ref
     }
 
     command <<<
@@ -171,7 +171,7 @@ task PicardQC {
 
 task RunRSEM {
     input {
-        Directory rsem_ref
+        File rsem_ref
         Array[File] fq1
         Array[File] fq2
         Int strand
@@ -190,7 +190,7 @@ task RunRSEM {
     >>>
 
     output {
-        Directory rsem_out = "RSEM_out"
+        File rsem_out = "RSEM_out"
     }
 
     runtime {
@@ -200,7 +200,7 @@ task RunRSEM {
 
 task RunSalmon {
     input {
-        Directory salmon_ref
+        File salmon_ref
         Array[File] fq1
         Array[File] fq2
         File gtf
@@ -236,7 +236,7 @@ task RunSalmon {
     >>>
 
     output {
-        Directory salmon_out = "Salmon_out"
+        File salmon_out = "Salmon_out"
     }
 
     runtime {

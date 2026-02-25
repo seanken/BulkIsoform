@@ -1,7 +1,7 @@
 version 1.0
 
-import "BulkPipe.wdl" as BulkPipe
-import "MakeRef.wdl" as MakeRef
+import "Pipeline/BulkPipe.wdl" as BulkPipe
+import "Pipeline/MakeRef.wdl" as MakeRef
 
 workflow Pipeline {
     input {
@@ -54,7 +54,7 @@ workflow Pipeline {
     
     output {
         # MakeRef outputs
-        Directory? ref_directory = MakeRef.output_directory
+        File? ref_directory = MakeRef.output_directory
         
         # BulkPipe outputs
         File? mapped_bam_out = BulkPipeline.mapped_bam_out
@@ -65,7 +65,7 @@ workflow Pipeline {
         File? with_intron_counts_sum = BulkPipeline.with_intron_counts_sum
         File? picard_qc = BulkPipeline.picard_qc
         File? picard_dup = BulkPipeline.picard_dup
-        Directory? rsem_out = BulkPipeline.rsem_out
-        Directory? salmon_out = BulkPipeline.salmon_out
+        File? rsem_out = BulkPipeline.rsem_out
+        File? salmon_out = BulkPipeline.salmon_out
     }
 }
