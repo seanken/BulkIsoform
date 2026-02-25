@@ -58,7 +58,6 @@ workflow BulkPipeline {
                 fq1 = fq1,
                 fq2 = fq2,
                 gtf = gtf,
-                gene_name = gene_name,
                 numGibbsSamples = numGibbsSamples
         }
     }
